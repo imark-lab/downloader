@@ -19,7 +19,7 @@ async fn fetch_file(url: Url, output: &OsString) -> Result<()> {
         .expect("Could not slice into segments")
         .last()
         .expect("Could not find last char");
-    let filename = format!("output/{file}");
+    let filename = format!("{}/{file}", output.to_str().unwrap());
     let response = reqwest::get(url).await?;
     DirBuilder::new().recursive(true).create(output)?;
     let bytes = response.bytes().await?;
